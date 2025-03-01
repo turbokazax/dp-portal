@@ -62,7 +62,7 @@ const ApplicationInfo = () => {
   const countWords = (text) =>
     text.trim().split(/\s+/).filter(Boolean).length;
 
-  // Word count handlers
+  // Word count handlers for essays: Only check for max limit onChange.
   const handleEssay1Change = (e) => {
     const value = e.target.value;
     if (countWords(value) > 250) {
@@ -152,9 +152,18 @@ const ApplicationInfo = () => {
       setError("Please fill out all required fields before submitting.");
       return;
     }
-    // Validate word count errors
+    // Validate word count errors for max limits
     if (essay1Error || essay2Error || additionalInfoError) {
       setError("Please ensure your essays and additional info are within the word limits.");
+      return;
+    }
+    // Validate minimum word count for Essay 1 and Essay 2 (50 words minimum)
+    if (countWords(essay1) < 50) {
+      setError("Essay 1 must be at least 50 words.");
+      return;
+    }
+    if (countWords(essay2) < 50) {
+      setError("Essay 2 must be at least 50 words.");
       return;
     }
     // If sex is "other", require a non-empty specification
@@ -177,7 +186,7 @@ const ApplicationInfo = () => {
   const handleProceed = () => {
     setShowSplash(false);
     setSubmitted(true);
-    // alert("Profile submitted successfully!");
+    alert("Profile submitted successfully!");
   };
 
   if (!uid) return <p>Please log in to access your application.</p>;
@@ -189,7 +198,7 @@ const ApplicationInfo = () => {
         <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
       )}
 
-      {/* Container to control width */}
+      {/* Container to control form width */}
       <div style={formContainerStyle}>
         <form>
           {/* Full Name */}
@@ -259,7 +268,7 @@ const ApplicationInfo = () => {
           {/* Essay 1 */}
           <div style={formGroupStyle}>
             <label style={labelStyle}>
-              <b>Essay 1:</b> Please explain why you wish to join our party, how you learned about us, and outline your plans and aspirations during your time with us. (250 words maximum)
+              <b>Essay 1:</b> Please explain why you wish to join our party, how you learned about us, and outline your plans and aspirations during your time with us. (250 words maximum, 50 words minimum)
             </label>
             <textarea
               placeholder="Your response here..."
@@ -277,7 +286,7 @@ const ApplicationInfo = () => {
           {/* Essay 2 */}
           <div style={formGroupStyle}>
             <label style={labelStyle}>
-              <b>Essay 2:</b> Dr. Gregory House once said, "There are three choices in this life: be good, get good, or give up." Reflect on this statement by sharing which of these paths best describes your approach to challenges and personal growth. Include specific examples from your life that illustrate how you navigate obstacles and make choices that define your character. (250 words maximum)
+              <b>Essay 2:</b> Dr. Gregory House once said, "There are three choices in this life: be good, get good, or give up." Reflect on this statement by sharing which of these paths best describes your approach to challenges and personal growth. Include specific examples from your life that illustrate how you navigate obstacles and make choices that define your character. (250 words maximum, 50 words minimum)
             </label>
             <textarea
               placeholder="Your response here..."
