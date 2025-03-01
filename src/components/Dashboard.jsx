@@ -26,7 +26,7 @@ const Dashboard = () => {
     height: "25vh",
     backgroundImage: `url("/diddyparty.jpg")`,
     backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundPosition: "center 30%",
     position: "relative", // or just omit "position" for default static
   };
 
