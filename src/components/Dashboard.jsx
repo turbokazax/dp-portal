@@ -24,7 +24,7 @@ const Dashboard = () => {
   const headerStyle = {
     width: "100%",
     height: "25vh",
-    backgroundImage: `url("public/diddyparty.jpg")`,
+    backgroundImage: `url("/diddyparty.jpg")`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     position: "relative", // or just omit "position" for default static
