@@ -62,7 +62,7 @@ const ApplicationInfo = () => {
   const countWords = (text) =>
     text.trim().split(/\s+/).filter(Boolean).length;
 
-  // Word count handlers for essays: Only check for max limit onChange.
+  // Word count handlers
   const handleEssay1Change = (e) => {
     const value = e.target.value;
     if (countWords(value) > 250) {
@@ -135,6 +135,8 @@ const ApplicationInfo = () => {
       alcohol,
       sex: sexValue,
       submitted: true,
+      admitted: false,
+      rejected: false,
     })
       .then(() => {
         setSplashPhase("thankYou");
@@ -186,7 +188,7 @@ const ApplicationInfo = () => {
   const handleProceed = () => {
     setShowSplash(false);
     setSubmitted(true);
-    alert("Profile submitted successfully!");
+    // alert("Profile submitted successfully!");
   };
 
   if (!uid) return <p>Please log in to access your application.</p>;
