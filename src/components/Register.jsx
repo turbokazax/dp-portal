@@ -1,7 +1,8 @@
 // src/components/Register.jsx
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, set } from "firebase/database";
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
@@ -13,7 +14,6 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Pre-check for password length
     if (password.length < 6) {
       setError("Password must be at least 6 characters long.");
       return;
@@ -22,6 +22,12 @@ const Register = () => {
     try {
       setError("");
       await createUserWithEmailAndPassword(auth, email, password);
+      const uid = auth.currentUser.uid;
+      // Create a minimal profile for the user in the database with isAdmin false
+      await set(ref(db, "users/" + uid + "/profile"), {
+        email,
+        isAdmin: false,
+      });
       navigate("/dashboard");
     } catch (err) {
       console.error("Registration error:", err);
@@ -64,11 +70,11 @@ const Register = () => {
           zIndex: 2,
         }}
       />
-      {/* University Title: Absolutely positioned */}
+      {/* University Title */}
       <div
         style={{
           position: "absolute",
-          top: "20%", // adjust this value as needed
+          top: "20%", // adjust as needed
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 3,
